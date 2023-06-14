@@ -4,8 +4,10 @@ import com.danskebank.codetest.Model.Account.Account;
 import com.danskebank.codetest.Model.Enums.TransactionType;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
