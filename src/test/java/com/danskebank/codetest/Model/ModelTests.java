@@ -31,28 +31,27 @@ class ModelTests {
 	@Test
 	void initializeAccount() {
 		long id = 1;
-		Customer owner = new Customer(1, "testOwner", Collections.emptyList());
 		long balance = 100000;
 
-		Account testAccount = new Account(id, owner, balance);
+		Account testAccount = new Account(id, id, balance);
 
 		assertEquals(id, testAccount.getID());
-		assertEquals(owner, testAccount.getOwner());
+		assertEquals(id, testAccount.getOwnerId());
 		assertEquals(balance, testAccount.getBalance());
 	}
 
 	@Test
 	void initializeTransaction() {
 		long id = 1;
-		Account account = new Account(id, new Customer(1, "testOwner", Collections.emptyList()), 10000);
+		Account account = new Account(id, id, 10000);
 		TransactionType type = TransactionType.DEPOSIT;
 		long amount = 100;
 
-		Transaction testTransaction = new Transaction(id, account, type, amount);
+		Transaction testTransaction = new Transaction(id, id, type, amount);
 
 		assertEquals(id, testTransaction.getID());
-		assertEquals(account, testTransaction.getAccount());
-		
+		assertEquals(id, testTransaction.getAccountId());
+
 		assertEquals(type, testTransaction.getType());
 		assertEquals(amount, testTransaction.getAmount());
 
