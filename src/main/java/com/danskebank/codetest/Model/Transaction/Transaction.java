@@ -13,7 +13,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Transaction {
     private long ID;
-    private Account account;
+    private long accountId;
     private TransactionType type;
     private long amount;
 }
