@@ -51,12 +51,18 @@ public class AccountRepository {
         accounts.put(customerId, customerAccounts);
     }
 
-    public void updateAccountBalance(long customerId, long accountId, TransactionType transactionType, long amount) {
+    public void updateAccountBalance(long customerId, long accountId, TransactionType transactionType, long amount)
+            throws Exception {
         Account account = getAccount(customerId, accountId);
         long accountBalance = account.getBalance();
         long newAccountBalance = transactionType == TransactionType.DEPOSIT
                 ? accountBalance + amount
                 : accountBalance - amount;
+
+        if (newAccountBalance < 0) {
+            // TODO: CustomExeption
+            throw new Exception();
+        }
         account.setBalance(newAccountBalance);
 
         updateAccount(customerId, account);

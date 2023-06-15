@@ -24,7 +24,7 @@ public class TransactionRepository {
     }
 
     public void addTransaction(long accountId, TransactionType transactionType, long amount) {
-        Map<Long, Transaction> accountTransactions = getAccountTransactions(accountId);
+        Map<Long, Transaction> accountTransactions = new HashMap<>();
 
         long transactionId = baseRepository.generateID();
         Transaction transaction = new Transaction(transactionId, accountId, transactionType, amount);

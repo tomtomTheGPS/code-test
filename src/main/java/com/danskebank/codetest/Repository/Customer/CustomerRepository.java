@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.danskebank.codetest.Model.Account.Account;
 import com.danskebank.codetest.Model.Customer.Customer;
@@ -27,6 +28,15 @@ public class CustomerRepository {
 
     public void deleteCustomer(long id) {
         customers.remove(id);
+    }
+
+    public long findCustomerID(String name) {
+        for (Entry<Long, Customer> entry : customers.entrySet()) {
+            if (entry.getValue().getName().equals(name)) {
+                return entry.getKey();
+            }
+        }
+        return 0;
     }
 
 }
