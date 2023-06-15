@@ -4,21 +4,71 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.danskebank.codetest.Model.Account.Account;
+import com.danskebank.codetest.Model.Enums.TransactionType;
+import com.danskebank.codetest.Repository.BaseRepository;
 
 public class AccountRepository {
 
-    private Map<Long, Account> accounts = new HashMap<Long, Account>();
+    private Map<Long, Map<Long, Account>> accounts = new HashMap<>();
+    private BaseRepository baseRepository;
 
-    public void addAccount(Account account) {
-        accounts.put(account.getID(), account);
+    public void createNewAccount(long customerId) {
+        long accountId = baseRepository.generateID();
+        Account account = new Account(accountId, customerId, 0);
+
+        Map<Long, Account> customerAccounts = getCustomerAccounts(customerId);
+        customerAccounts.put(account.getID(), account);
+        accounts.put(customerId, customerAccounts);
     }
 
-    public Account getAccount(long id) {
-        return accounts.get(id);
+    public void createNewAccount(long customerId, long initialBalance) {
+        long accountId = baseRepository.generateID();
+        Account account = new Account(accountId, customerId, initialBalance);
+
+        Map<Long, Account> customerAccounts = getCustomerAccounts(customerId);
+        customerAccounts.put(account.getID(), account);
+        accounts.put(customerId, customerAccounts);
     }
 
-    public void deleteAccount(long id) {
-        accounts.remove(id);
+    public Account getAccount(long customerId, long accountId) {
+        Map<Long, Account> customerAccounts = getCustomerAccounts(customerId);
+        return customerAccounts.get(accountId);
+    }
+
+    public void updateAccount(long customerId, Account account) {
+        Map<Long, Account> customerAccounts = getCustomerAccounts(customerId);
+        customerAccounts.put(account.getID(), account);
+        accounts.put(customerId, customerAccounts);
+    }
+
+    public void deleteAllAccounts(long customerId) {
+        accounts.remove(customerId);
+    }
+
+    public void deleteAccount(long customerId, long accountId) {
+        Map<Long, Account> customerAccounts = getCustomerAccounts(customerId);
+        customerAccounts.remove(accountId);
+        accounts.put(customerId, customerAccounts);
+    }
+
+    public void updateAccountBalance(long customerId, long accountId, TransactionType transactionType, long amount) {
+        Account account = getAccount(customerId, accountId);
+        long accountBalance = account.getBalance();
+        long newAccountBalance = transactionType == TransactionType.DEPOSIT
+                ? accountBalance + amount
+                : accountBalance - amount;
+        account.setBalance(newAccountBalance);
+
+        updateAccount(customerId, account);
+    }
+
+    private Map<Long, Account> getCustomerAccounts(long customerId) {
+        Map<Long, Account> customerAccounts = new HashMap<>();
+        try {
+            customerAccounts = accounts.get(customerId);
+        } catch (NullPointerException e) {
+        }
+        return customerAccounts;
     }
 
 }

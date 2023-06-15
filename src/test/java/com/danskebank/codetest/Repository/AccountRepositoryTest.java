@@ -21,7 +21,7 @@ public class AccountRepositoryTest {
     void accountRepositoryTest() {
         Account testAccount = new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000);
 
-        accountRepository.addAccount(testAccount);
+        accountRepository.updateAccount(testAccount);
 
         assertEquals(testAccount, accountRepository.getAccount(testAccount.getID()));
 

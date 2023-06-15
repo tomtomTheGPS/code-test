@@ -17,53 +17,53 @@ import com.danskebank.codetest.Repository.Transaction.TransactionRepository;
 @SpringBootTest
 public class TransactionRepositoryTest {
 
-    private TransactionRepository transactionRepository = new TransactionRepository();
+        private TransactionRepository transactionRepository = new TransactionRepository();
 
-    @Test
-    void createAndGetNewTransactionTest() {
+        @Test
+        void createAndGetNewTransactionTest() {
 
-        Transaction testTransaction = new Transaction(
-                1,
-                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
-                TransactionType.DEPOSIT,
-                100);
+                Transaction testTransaction = new Transaction(
+                                1,
+                                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
+                                TransactionType.DEPOSIT,
+                                100);
 
-        transactionRepository.addTransaction(testTransaction);
+                transactionRepository.addTransaction(testTransaction);
 
-        assertEquals(testTransaction, transactionRepository.getTransaction(testTransaction.getID()));
+                assertEquals(testTransaction, transactionRepository.getTransaction(testTransaction.getID()));
 
-    }
+        }
 
-    @Test
-    void getAllTransactionsTest() {
+        @Test
+        void getAllTransactionsTest() {
 
-        Transaction testTransaction1 = new Transaction(
-                1,
-                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
-                TransactionType.DEPOSIT,
-                100);
+                Transaction testTransaction1 = new Transaction(
+                                1,
+                                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
+                                TransactionType.DEPOSIT,
+                                100);
 
-        Transaction testTransaction2 = new Transaction(
-                2,
-                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
-                TransactionType.DEPOSIT,
-                200);
+                Transaction testTransaction2 = new Transaction(
+                                2,
+                                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
+                                TransactionType.DEPOSIT,
+                                200);
 
-        Transaction testTransaction3 = new Transaction(
-                3,
-                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
-                TransactionType.WITHDRAW,
-                300);
+                Transaction testTransaction3 = new Transaction(
+                                3,
+                                new Account(1, new Customer(1, "testOwner", Collections.emptyList()), 10000),
+                                TransactionType.WITHDRAW,
+                                300);
 
-        transactionRepository.addTransaction(testTransaction1);
-        transactionRepository.addTransaction(testTransaction2);
-        transactionRepository.addTransaction(testTransaction3);
+                transactionRepository.addTransaction(testTransaction1);
+                transactionRepository.addTransaction(testTransaction2);
+                transactionRepository.addTransaction(testTransaction3);
 
-        List<Transaction> expectedList = List.of(testTransaction1, testTransaction2, testTransaction3);
-        List<Transaction> transactions = transactionRepository.getAllTransactions();
+                List<Transaction> expectedList = List.of(testTransaction1, testTransaction2, testTransaction3);
+                List<Transaction> transactions = transactionRepository.getLatestTransactions();
 
-        assertEquals(expectedList, transactions);
+                assertEquals(expectedList, transactions);
 
-    }
+        }
 
 }
